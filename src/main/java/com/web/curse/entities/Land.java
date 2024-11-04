@@ -1,6 +1,6 @@
 package com.web.curse.entities;
 
-import enums.Meter;
+import com.web.curse.enums.Meter;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -16,11 +16,10 @@ public class Land extends BaseEntity{
     private Set<MembershipFeePayment> membershipFeePayments;
     private Set<TargetFeePayment> targetFeePayments;
 
-    public Land(String number, int sizeInArs, Meter electricMeter, Client client) {
+    public Land(String number, int sizeInArs, Meter electricMeter) {
         this.number = number;
         this.sizeInArs = sizeInArs;
         this.electricMeter = electricMeter;
-        this.client = client;
     }
 
     @Column(name = "number", unique = true,nullable = false)
@@ -33,6 +32,7 @@ public class Land extends BaseEntity{
         return sizeInArs;
     }
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "electric_meter_type", nullable = false)
     public Meter getElectricMeter() {
         return electricMeter;

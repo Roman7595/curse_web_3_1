@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "tarif_payments")
+@Table(name = "tariff_payments")
 public class TariffPayment extends  BaseEntity{
     private double waterUsage;
     private double waterSum;
@@ -15,7 +15,7 @@ public class TariffPayment extends  BaseEntity{
     private double doubleElectricalDaySum;
     private double doubleElectricalNightUsage;
     private double doubleElectricalNightSum;
-    private final Date paymentDate;
+    private Date paymentDate;
     private Tariff tariff;
     private Land land;
 
@@ -130,4 +130,9 @@ public class TariffPayment extends  BaseEntity{
     public void setDoubleElectricalNightSum(double doubleElectricalNightSum) {
         this.doubleElectricalNightSum = doubleElectricalNightSum;
     }
+
+    protected void setPaymentDate(Date paymentDate){
+        this.paymentDate = paymentDate;
+    }
+
 }

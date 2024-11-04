@@ -35,7 +35,7 @@ public class MembershipFee extends BaseEntity{
         return endDate;
     }
 
-    @OneToMany(mappedBy = "membership_fee",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "membershipFee",fetch = FetchType.LAZY)
     public Set<MembershipFeePayment> getMembershipFeePayments() {
         return membershipFeePayments;
     }

@@ -12,7 +12,7 @@ public class Tariff extends BaseEntity{
     private double singleElectricalTariff;
     private double doubleElectricalTariffDay;
     private double doubleElectricalTariffNight;
-    private final Date startDate;
+    private Date startDate;
     private Set<TariffPayment> tariffPayments;
     public Tariff(double waterTariff, double singleElectricalTariff, double doubleElectricalTariffDay, double doubleElectricalTariffNight) {
         this.waterTariff = waterTariff;
@@ -47,7 +47,7 @@ public class Tariff extends BaseEntity{
         return startDate;
     }
 
-    @OneToMany(mappedBy = "tariff", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tariff")
     public Set<TariffPayment> getTariffPayments() {
         return tariffPayments;
     }
@@ -70,5 +70,9 @@ public class Tariff extends BaseEntity{
 
     public void setDoubleElectricalTariffNight(double doubleElectricalTariffNight) {
         this.doubleElectricalTariffNight = doubleElectricalTariffNight;
+    }
+
+    protected void setStartDate(Date startDate){
+        this.startDate = startDate;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "membership_fees")
+@Table(name = "target_fees")
 public class TargetFee extends BaseEntity{
     private String targetName;
     private double contributionAmount;
@@ -41,7 +41,7 @@ public class TargetFee extends BaseEntity{
         return endDate;
     }
 
-    @OneToMany(mappedBy = "target_fee", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "targetFee")
     public Set<TargetFeePayment> getTargetFeePayments() {
         return targetFeePayments;
     }

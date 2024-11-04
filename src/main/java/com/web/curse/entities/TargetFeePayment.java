@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "target_fee_payments")
 public class TargetFeePayment extends  BaseEntity{
     private double feeSum;
-    private final Date paymentDate;
+    private Date paymentDate;
     private TargetFee targetFee;
     private Land land;
 
@@ -30,7 +30,7 @@ public class TargetFeePayment extends  BaseEntity{
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "membership_fee_id", nullable = false)
+    @JoinColumn(name = "target_fee_id", nullable = false)
     public TargetFee getTargetFee() {
         return targetFee;
     }
@@ -51,5 +51,9 @@ public class TargetFeePayment extends  BaseEntity{
 
     public void setLand(Land land) {
         this.land = land;
+    }
+
+    protected void setPaymentDate(Date paymentDate){
+        this.paymentDate = paymentDate;
     }
 }

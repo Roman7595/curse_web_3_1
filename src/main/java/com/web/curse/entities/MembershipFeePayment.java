@@ -53,6 +53,10 @@ public class MembershipFeePayment extends  BaseEntity{
         this.land = land;
     }
 
+    protected void  setPaymentDate(Date paymentDate){
+        this.paymentDate = paymentDate;
+    }
+
     protected MembershipFeePayment() {
     }
 }
