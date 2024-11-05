@@ -1,10 +1,12 @@
 package com.web.curse.repositories.impl;
 
 
+import com.web.curse.entities.Land;
 import com.web.curse.entities.TariffPayment;
 import com.web.curse.repositories.baseRepositories.GetRepository;
 import com.web.curse.repositories.baseRepositories.SaveRepository;
 import com.web.curse.repositories.baseRepositories.UpdateRepository;
+import com.web.curse.repositories.customRepositories.TariffPaymentCustomRepository;
 import com.web.curse.repositories.interfaces.TariffPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,9 @@ class TariffPaymentRepositoryImpl implements TariffPaymentRepository {
 
     @Autowired
     UpdateRepository<TariffPayment> updateRepository;
+
+    @Autowired
+    TariffPaymentCustomRepository tariffPaymentCustomRepository;
 
     @Override
     public Optional<TariffPayment> findById(long id) {
@@ -41,5 +46,10 @@ class TariffPaymentRepositoryImpl implements TariffPaymentRepository {
     @Override
     public TariffPayment update(TariffPayment tariffPayment) {
         return updateRepository.update(tariffPayment);
+    }
+
+    @Override
+    public List<TariffPayment> findByLand(Land land) {
+        return tariffPaymentCustomRepository.findByLand(land);
     }
 }

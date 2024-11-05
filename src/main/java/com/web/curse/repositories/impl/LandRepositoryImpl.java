@@ -1,10 +1,12 @@
 package com.web.curse.repositories.impl;
 
 
+import com.web.curse.entities.Client;
 import com.web.curse.entities.Land;
 import com.web.curse.repositories.baseRepositories.GetRepository;
 import com.web.curse.repositories.baseRepositories.SaveRepository;
 import com.web.curse.repositories.baseRepositories.UpdateRepository;
+import com.web.curse.repositories.customRepositories.LandCustomRepository;
 import com.web.curse.repositories.interfaces.LandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,8 @@ class LandRepositoryImpl implements LandRepository {
     @Autowired
     UpdateRepository<Land> updateRepository;
 
+    @Autowired
+    LandCustomRepository landCustomRepository;
 
     @Override
     public Land save(Land land) {
@@ -44,4 +48,11 @@ class LandRepositoryImpl implements LandRepository {
         return getRepository.findById(id,Land.class);
     }
 
+    @Override
+    public List<Land> findByClient(Client client) {
+        return landCustomRepository.findByClient(client);
+    }
+    public Land findByNumber(String number){
+        return landCustomRepository.findByNumber(number);
+    }
 }

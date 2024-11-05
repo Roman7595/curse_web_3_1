@@ -11,7 +11,9 @@ public interface ClientRepository {
     public List<Client> findAll();
 
     public Optional<Client> findById(long id);
-    Client getWhereLand(Land land);
+    Client findByLand(Land land);
+
+    Client findByLogin(String login);
 //    public List<Client> whereTariff(Tariff tariff);
 //    public List<Client> whereMembershipFee(MembershipFee membershipFee);
 //    public List<Client> whereTargetFee(TargetFee targetFee);

@@ -43,8 +43,13 @@ class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public Client getWhereLand(Land land) {
-        return clientCustomRepository.getWhereLand(land);
+    public Client findByLand(Land land) {
+        return clientCustomRepository.findByLand(land);
+    }
+
+    @Override
+    public Client findByLogin(String login) {
+        return clientCustomRepository.findByLogin(login);
     }
 
 }

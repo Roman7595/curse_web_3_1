@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ClientCustomRepository extends Repository<Client, Long> {
     @Query(value = "select c from Land l join l.client c where l = :land")
-    Client getWhereLand(@Param(value = "land") Land land);
-
+    Client findByLand(@Param(value = "land") Land land);
+    @Query(value = "select c from Client c where c.login = :login")
+    Client findByLogin(@Param(value = "login") String login);
 }
