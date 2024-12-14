@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/nav">Навигация</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <h1 class="text-center text-dark mt-2">Панель администратора</h1>
+                <nav>
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{land/}">Участки</a>
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{tariff/}">Тарифы</a>
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{target/}">Целевые взносы</a>
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{membership/}">Членские взносы</a>
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{client/}">Участники</a>
+
+                    <a class="btn btn-secondary mb-3"
+                       th:href="@{get_dept_leaderboard}">Топ 5 главных должников</a>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

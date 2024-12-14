@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/nav">Навигация</div>
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Добавить участок</h1>
+                </div>
+
+                <a class="btn btn-primary mb-3"
+                   href="/admin/">Панель администратора</a>
+
+                <form th:action="@{create}"
+                      th:method="post"
+                      th:object="${form}"
+                      class="m-md-auto w-50 pb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="number">Номер</label>
+                        <input th:field="*{number}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="number"/>
+                        <small th:if="${#fields.hasErrors('number')}"
+                               th:errors="*{number}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="sizeInArs">Размер в сотках</label>
+                        <input th:field="*{sizeInArs}"
+                               th:errorclass="is-invalid"
+                               type="number"
+                               min="1"
+                               class="form-control text-center"
+                               id="sizeInArs"/>
+                        <small th:if="${#fields.hasErrors('sizeInArs')}"
+                               th:errors="*{sizeInArs}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="electricMeter">Тип счетчика</label>
+
+                        <select th:field="*{electricMeter}"
+                               th:errorclass="is-invalid"
+                               type="number"
+                               class="form-control text-center"
+                               id="electricMeter">
+                            <option th:text="'Нет счетчика электричества'" th:value="0" ></option>
+                            <option th:text="'Однотарифный счетчик'" th:value="1" ></option>
+                            <option th:text="'Двухтарифный счетчик'" th:value="2" ></option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('electricMeter')}"
+                               th:errors="*{electricMeter}"
+                               class="text-danger">Error message</small>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Создать участок</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

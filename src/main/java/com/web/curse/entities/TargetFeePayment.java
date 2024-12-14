@@ -8,13 +8,13 @@ import java.util.Date;
 @Table(name = "target_fee_payments")
 public class TargetFeePayment extends  BaseEntity{
     private double feeSum;
-    private Date paymentDate;
+    private Date paymentLocalDate;
     private TargetFee targetFee;
     private Land land;
 
     public TargetFeePayment(double feeSum, TargetFee targetFee, Land land) {
         this.feeSum = feeSum;
-        this.paymentDate = new Date();
+        this.paymentLocalDate = null;
         this.targetFee = targetFee;
         this.land = land;
     }
@@ -24,9 +24,9 @@ public class TargetFeePayment extends  BaseEntity{
         return feeSum;
     }
 
-    @Column(name = "payment_date", nullable = false)
-    public Date getPaymentDate() {
-        return paymentDate;
+    @Column(name = "payment_LocalDate")
+    public Date getPaymentLocalDate() {
+        return paymentLocalDate;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -53,7 +53,11 @@ public class TargetFeePayment extends  BaseEntity{
         this.land = land;
     }
 
-    protected void setPaymentDate(Date paymentDate){
-        this.paymentDate = paymentDate;
+
+    public void setPaymentLocalDate(Date paymentLocalDate){
+        this.paymentLocalDate = paymentLocalDate;
+    }
+
+    protected TargetFeePayment() {
     }
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/nav">Навигация</div>
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <h1 class="text-center text-dark mt-5">Список тарифов</h1>
+
+                <a class="btn btn-primary mb-3"
+                   href="/admin/">Панель администратора</a>
+
+                <div class="mb-4">
+                    <a class="btn btn-success" th:href="@{create}">Создать тариф</a>
+                </div>
+
+                <div th:if="${#lists.isEmpty(model.tariffModels)}" class="alert alert-info">
+
+                </div>
+
+                <div th:if="${not #lists.isEmpty(model.tariffModels)}">
+                    <div th:each="tariff : ${model.tariffModels}"
+                         class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                        <h4 th:text="'Id: ' + ${tariff.id}"> </h4>
+                        <h4 th:text="'Вода: ' + ${#numbers.formatDecimal(tariff.waterTariff,1,'COMMA', 2, 'POINT')}"> </h4>
+                        <h4 th:text="'Одноставочный тариф: ' + ${#numbers.formatDecimal(tariff.singleElectricalTariff,1,'COMMA', 2, 'POINT')}"> </h4>
+                        <h4 th:text="'Дневной тариф: ' + ${#numbers.formatDecimal(tariff.doubleElectricalTariffDay,1,'COMMA', 2, 'POINT')}"> </h4>
+                        <h4 th:text="'Ночной тариф: ' + ${#numbers.formatDecimal(tariff.doubleElectricalTariffNight,1,'COMMA', 2, 'POINT')}"> </h4>
+                        <h4 th:text="'Дата начала действия: ' + ${tariff.startLocalDate}"> </h4>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

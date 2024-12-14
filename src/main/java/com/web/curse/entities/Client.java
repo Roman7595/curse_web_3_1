@@ -2,17 +2,20 @@ package com.web.curse.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-public class Client extends BaseEntity{
+public class Client extends BaseEntity {
     private String login;
     private String password;
     private String name;
     private String middleName;
     private String lastName;
     private Set<Land> lands;
+
+    private List<Role> roles;
 
     @Column(name = "login",unique = true, nullable = false)
     public String getLogin() {
@@ -61,12 +64,13 @@ public class Client extends BaseEntity{
 
 
 
-    public Client(String login, String password, String name, String middleName, String lastName) {
+    public Client(String login, String password, String name, String middleName, String lastName,List<Role> roles) {
         this.login = login;
         this.password = password;
         this.name = name;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.roles = roles;
     }
 
     @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
@@ -76,6 +80,15 @@ public class Client extends BaseEntity{
 
     public void setLands(Set<Land> lands) {
         this.lands = lands;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     protected Client() {

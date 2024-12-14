@@ -10,15 +10,15 @@ import java.util.Set;
 public class TargetFee extends BaseEntity{
     private String targetName;
     private double contributionAmount;
-    private Date startDate;
-    private Date endDate;
+    private Date startLocalDate;
+    private Date endLocalDate;
     private Set<TargetFeePayment> targetFeePayments;
 
-    public TargetFee(String targetName, double contributionAmount, Date endDate) {
+    public TargetFee(String targetName, double contributionAmount, Date endLocalDate) {
         this.targetName = targetName;
         this.contributionAmount = contributionAmount;
-        this.startDate = new Date();
-        this.endDate = endDate;
+        this.startLocalDate = new Date();
+        this.endLocalDate = endLocalDate;
     }
 
     @Column(name = "target_name",nullable = false)
@@ -31,14 +31,14 @@ public class TargetFee extends BaseEntity{
         return contributionAmount;
     }
 
-    @Column(name = "start_date", nullable = false)
-    public Date getStartDate() {
-        return startDate;
+    @Column(name = "start_LocalDate", nullable = false)
+    public Date getStartLocalDate() {
+        return startLocalDate;
     }
 
-    @Column(name = "end_date", nullable = false)
-    public Date getEndDate() {
-        return endDate;
+    @Column(name = "end_LocalDate", nullable = false)
+    public Date getEndLocalDate() {
+        return endLocalDate;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "targetFee")
@@ -57,12 +57,12 @@ public class TargetFee extends BaseEntity{
         this.contributionAmount = contributionAmount;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartLocalDate(Date startLocalDate) {
+        this.startLocalDate = startLocalDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndLocalDate(Date endLocalDate) {
+        this.endLocalDate = endLocalDate;
     }
 
     protected TargetFee() {

@@ -15,4 +15,5 @@ public interface LandRepository {
     public List<Land> findByClient(Client client);
 
     public Land findByNumber(String number);
+
 }

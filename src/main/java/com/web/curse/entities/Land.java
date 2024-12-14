@@ -1,6 +1,6 @@
 package com.web.curse.entities;
 
-import com.web.curse.enums.Meter;
+import com.web.curse.entities.enums.Meter;
 import jakarta.persistence.*;
 
 import java.util.Set;

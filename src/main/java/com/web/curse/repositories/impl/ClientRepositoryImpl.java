@@ -5,7 +5,6 @@ import com.web.curse.entities.Client;
 import com.web.curse.entities.Land;
 import com.web.curse.repositories.baseRepositories.GetRepository;
 import com.web.curse.repositories.baseRepositories.SaveRepository;
-//import com.web.curse.repositories.customRepositories.ClientCustomRepository;
 import com.web.curse.repositories.customRepositories.ClientCustomRepository;
 import com.web.curse.repositories.interfaces.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,23 @@ import java.util.Optional;
 @Repository
 class ClientRepositoryImpl implements ClientRepository {
     @Autowired
+    public void setGetRepository(GetRepository<Client> getRepository) {
+        this.getRepository = getRepository;
+    }
+
+    @Autowired
+    public void setSaveRepository(SaveRepository<Client> saveRepository) {
+        this.saveRepository = saveRepository;
+    }
+    @Autowired
+    public void setClientCustomRepository(ClientCustomRepository clientCustomRepository) {
+        this.clientCustomRepository = clientCustomRepository;
+    }
+
     GetRepository<Client> getRepository;
 
-    @Autowired
     SaveRepository<Client> saveRepository;
 
-    @Autowired
     ClientCustomRepository clientCustomRepository;
 
 

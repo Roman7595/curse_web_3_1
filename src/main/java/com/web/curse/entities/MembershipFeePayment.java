@@ -8,13 +8,13 @@ import java.util.Date;
 @Table(name = "membership_fee_payments")
 public class MembershipFeePayment extends  BaseEntity{
     private double feeSum;
-    private Date paymentDate;
+    private Date paymentLocalDate;
     private MembershipFee membershipFee;
     private Land land;
 
     public MembershipFeePayment(double feeSum, MembershipFee membershipFee, Land land) {
         this.feeSum = feeSum;
-        this.paymentDate = new Date();
+        this.paymentLocalDate = null;
         this.membershipFee = membershipFee;
         this.land = land;
     }
@@ -24,9 +24,9 @@ public class MembershipFeePayment extends  BaseEntity{
         return feeSum;
     }
 
-    @Column(name = "payment_date", nullable = false)
-    public Date getPaymentDate() {
-        return paymentDate;
+    @Column(name = "payment_LocalDate")
+    public Date getPaymentLocalDate() {
+        return paymentLocalDate;
     }
 
     @JoinColumn(name = "membership_fee_id",nullable = false)
@@ -53,8 +53,8 @@ public class MembershipFeePayment extends  BaseEntity{
         this.land = land;
     }
 
-    protected void  setPaymentDate(Date paymentDate){
-        this.paymentDate = paymentDate;
+    public void  setPaymentLocalDate(Date paymentLocalDate){
+        this.paymentLocalDate = paymentLocalDate;
     }
 
     protected MembershipFeePayment() {

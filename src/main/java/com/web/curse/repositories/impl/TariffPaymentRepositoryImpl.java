@@ -11,21 +11,28 @@ import com.web.curse.repositories.interfaces.TariffPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 class TariffPaymentRepositoryImpl implements TariffPaymentRepository {
     @Autowired
+    public TariffPaymentRepositoryImpl(GetRepository<TariffPayment> getRepository, SaveRepository<TariffPayment> saveRepository, UpdateRepository<TariffPayment> updateRepository, TariffPaymentCustomRepository tariffPaymentCustomRepository) {
+        this.getRepository = getRepository;
+        this.saveRepository = saveRepository;
+        this.updateRepository = updateRepository;
+        this.tariffPaymentCustomRepository = tariffPaymentCustomRepository;
+    }
+
+
+
     GetRepository<TariffPayment> getRepository;
 
-    @Autowired
     SaveRepository<TariffPayment> saveRepository;
 
-    @Autowired
     UpdateRepository<TariffPayment> updateRepository;
 
-    @Autowired
     TariffPaymentCustomRepository tariffPaymentCustomRepository;
 
     @Override
@@ -52,4 +59,9 @@ class TariffPaymentRepositoryImpl implements TariffPaymentRepository {
     public List<TariffPayment> findByLand(Land land) {
         return tariffPaymentCustomRepository.findByLand(land);
     }
+
+    public TariffPayment findLast(Land land, Date endLocalDate){
+        return tariffPaymentCustomRepository.findLast(land, endLocalDate);
+    }
+
 }

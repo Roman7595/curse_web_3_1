@@ -2,6 +2,7 @@ package com.web.curse.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -11,18 +12,25 @@ public class TariffPayment extends  BaseEntity{
     private double singleElectricalUsage;
     private double doubleElectricalDayUsage;
     private double doubleElectricalNightUsage;
-    private Date paymentDate;
+    private Date paymentLocalDate;
     private Tariff tariff;
     private Land land;
 
+    private Date startLocalDate;
+
+    private Date endLocalDate;
     public TariffPayment(double waterUsage, double singleElectricalUsage, double doubleElectricalDayUsage, double doubleElectricalNightUsage, Tariff tariff, Land land) {
         this.waterUsage = waterUsage;
         this.singleElectricalUsage = singleElectricalUsage;
         this.doubleElectricalDayUsage = doubleElectricalDayUsage;
         this.doubleElectricalNightUsage = doubleElectricalNightUsage;
-        this.paymentDate = null;
+        this.paymentLocalDate = null;
         this.tariff = tariff;
         this.land = land;
+        Calendar cal = Calendar.getInstance();
+        this.startLocalDate = cal.getTime();
+        cal.add(Calendar.MONTH, 1);
+        this.endLocalDate =  cal.getTime();
     }
 
 
@@ -50,9 +58,9 @@ public class TariffPayment extends  BaseEntity{
     }
 
 
-    @Column(name = "payment_date")
-    public Date getPaymentDate() {
-        return paymentDate;
+    @Column(name = "payment_LocalDate")
+    public Date getPaymentLocalDate() {
+        return paymentLocalDate;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -65,6 +73,15 @@ public class TariffPayment extends  BaseEntity{
     @JoinColumn(name = "land_id",nullable = false)
     public Land getLand() {
         return land;
+    }
+
+    @Column(name = "start_local_date")
+    public Date getStartLocalDate() {
+        return startLocalDate;
+    }
+    @Column(name = "end_local_date")
+    public Date getEndLocalDate() {
+        return endLocalDate;
     }
 
     public void setTariff(Tariff tariff) {
@@ -94,9 +111,18 @@ public class TariffPayment extends  BaseEntity{
         this.doubleElectricalNightUsage = doubleElectricalNightUsage;
     }
 
-
-    protected void setPaymentDate(Date paymentDate){
-        this.paymentDate = paymentDate;
+    public void setEndLocalDate(Date endLocalDate) {
+        this.endLocalDate = endLocalDate;
     }
 
+    public void setStartLocalDate(Date startLocalDate) {
+        this.startLocalDate = startLocalDate;
+    }
+
+    public void setPaymentLocalDate(Date paymentLocalDate){
+        this.paymentLocalDate = paymentLocalDate;
+    }
+
+    protected TariffPayment() {
+    }
 }

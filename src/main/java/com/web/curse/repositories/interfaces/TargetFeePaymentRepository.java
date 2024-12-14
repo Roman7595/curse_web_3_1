@@ -1,6 +1,8 @@
 package com.web.curse.repositories.interfaces;
 
 
+import com.web.curse.entities.Land;
+import com.web.curse.entities.TargetFee;
 import com.web.curse.entities.TargetFeePayment;
 
 import java.util.List;
@@ -11,6 +13,8 @@ public interface TargetFeePaymentRepository {
     public List<TargetFeePayment> findAll();
     public TargetFeePayment save(TargetFeePayment targetFeePayment);
     public TargetFeePayment update(TargetFeePayment land);
-//    public List<TargetFeePayment> whereClient(Client client);
+    public TargetFeePayment findByLandAndTargetFee(Land land, TargetFee targetFee);
+
+    List<TargetFeePayment> findByLand(Land land);
 
 }

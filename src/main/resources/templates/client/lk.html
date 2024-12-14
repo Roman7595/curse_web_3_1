@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/nav">Навигация</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <h1 class="text-center text-dark mt-2">Личный кабинет</h1>
+
+                <div th:object="${model.clientModel}" class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                    <h2 th:text="'ФИО: ' + *{name}+' '+ *{middleName}+' '+ *{lastName}"></h2>
+                    <h5 th:text="'Login: ' + *{login}"></h5>
+                    
+                </div>
+
+                <div th:if="${#lists.isEmpty(model.landFullModels)}" class="alert alert-info">
+
+                </div>
+
+                <div th:if="${not #lists.isEmpty(model.landFullModels)}">
+                    <div th:each="fullLand : ${model.landFullModels}"
+                         class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+
+                        <div th:object="${fullLand.landModel}">
+                            <h2 th:text="'Участок: ' + *{number}"></h2>
+                            <h5 th:text="'Размер в сотках: ' + *{sizeInArs}"></h5>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(fullLand.membershipFeePaymentFullModels)}" class="alert alert-info">
+                            Нет членских взносов
+                        </div>
+                        <div th:if="${not #lists.isEmpty(fullLand.membershipFeePaymentFullModels)}">
+                            <h2>Членские взносы</h2>
+                            <div th:each="fullMembership : *{fullLand.membershipFeePaymentFullModels}" class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                                <div th:object="${fullMembership}">
+                                    <h6 th:text="'Дата начала оплаты: ' + *{membershipFee.startLocalDate}"></h6>
+                                    <h6 th:text="'Дата окончания оплаты: ' + *{membershipFee.endLocalDate}"></h6>
+
+                                    <h6 th:text="'Сумма к оплате: ' + *{#numbers.formatDecimal(membershipFeePaymentModel.feeSum,1,'COMMA', 2, 'POINT')}"></h6>
+
+                                    <h6 th:if="*{membershipFeePaymentModel.payLocalDate!=null}" th:text="'Дата оплаты: ' + *{membershipFeePaymentModel.payLocalDate}"></h6>
+                                    <a th:if="*{membershipFeePaymentModel.payLocalDate==null}" class="btn btn-primary mb-3"
+                                       th:href="@{'/pay/membershipFee/' + *{membershipFeePaymentModel.id} }">Оплатить</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(fullLand.targetFeePaymentFullModels)}" class="alert alert-info">
+                            Нет целевых взносов
+                        </div>
+                        <div th:if="${not #lists.isEmpty(fullLand.targetFeePaymentFullModels)}">
+                            <h2>Целевые взносы</h2>
+                            <div th:each="fullTarget : *{fullLand.targetFeePaymentFullModels}" class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                                <div th:object="${fullTarget}">
+                                    <h4 th:text="'Цель: ' + *{targetFee.targetName}"></h4>
+
+                                    <h6 th:text="'Дата начала оплаты: ' + *{targetFee.startLocalDate}"></h6>
+                                    <h6 th:text="'Дата окончания оплаты: ' + *{targetFee.endLocalDate}"></h6>
+
+                                    <h6 th:text="'Сумма к оплате: ' + *{#numbers.formatDecimal(targetFeePaymentModel.feeSum,1,'COMMA', 2, 'POINT')}"></h6>
+                                    <h6 th:if="*{targetFeePaymentModel.payLocalDate!=null}" th:text="'Дата оплаты: ' + *{targetFeePaymentModel.payLocalDate}"></h6>
+                                    <a th:if="*{targetFeePaymentModel.payLocalDate==null}" class="btn btn-primary mb-3"
+                                       th:href="@{'/pay/targetFee/' + *{targetFeePaymentModel.id} }">Оплатить</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div th:if="${#lists.isEmpty(fullLand.tariffPaymentFullModels)}" class="alert alert-info">
+                            Нет платежей по тарифам
+                        </div>
+                        <div th:if="${not #lists.isEmpty(fullLand.tariffPaymentFullModels)}">
+                            <h2>Платежи по тарифам</h2>
+                            <div th:each="fullTariff : *{fullLand.tariffPaymentFullModels}" class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                                <div th:object="${fullTariff}">
+                                    <h6 th:text="'Дата начала оплаты: ' + *{tariffPaymentModel.startLocalDate}"></h6>
+                                    <h6 th:text="'Дата окончания оплаты: ' + *{tariffPaymentModel.endLocalDate}"></h6>
+
+                                    <h6 th:text="'Потребление воды в этом месяце: ' + *{#numbers.formatDecimal(tariffPaymentModel.waterUsage,1,'COMMA', 2, 'POINT')} + ' (м^3)'"></h6>
+                                    <h6 th:text="'Тариф этого месяца: ' + *{#numbers.formatDecimal(tariffModel.waterTariff,1,'COMMA', 2, 'POINT')} + ' (руб./м^3)'"></h6>
+                                    <h6 th:text="'Сумма к оплате: '+ *{#numbers.formatDecimal(tariffPaymentModel.waterSum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+                                    <div>
+                                    <div th:if="${fullLand.landModel.electricMeter==0}" class="alert alert-info">
+                                        Установите электрический счетчик
+                                    </div>
+                                        <h6 th:text="'Общая сумма к оплате: ' + *{#numbers.formatDecimal(tariffPaymentModel.waterSum,1,'COMMA', 2, 'POINT')} + ' (руб.)'"></h6>
+                                    </div>
+                                    <div>
+                                    <div th:if="${fullLand.landModel.electricMeter==1}" class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                                        <h4>Однотарифный счетчик</h4>
+                                        <h6 th:text="'Потребление воды в этом месяце: ' + *{#numbers.formatDecimal(tariffPaymentModel.singleElectricalUsage,1,'COMMA', 2, 'POINT')} + ' (кВт)'"></h6>
+                                        <h6 th:text="'Тариф этого месяца: ' + *{#numbers.formatDecimal(tariffModel.singleElectricalTariff,1,'COMMA', 2, 'POINT')} + ' (руб./кВт)'"></h6>
+                                        <h6 th:text="'Сумма к оплате: '+ *{#numbers.formatDecimal(tariffPaymentModel.singleElectricalSum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+                                    </div>
+                                        <h6 th:text="'Общая сумма к оплате: ' + *{#numbers.formatDecimal(tariffPaymentModel.waterSum + tariffPaymentModel.singleElectricalSum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+
+                                    </div>
+                                    <div th:if="${fullLand.landModel.electricMeter==2}">
+                                    <div class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                                        <h4>Дневная фаза</h4>
+                                        <h6 th:text="'Потребление воды в этом месяце: ' + *{#numbers.formatDecimal(tariffPaymentModel.doubleElectricalDayUsage,1,'COMMA', 2, 'POINT')} + ' (кВт)'"></h6>
+                                        <h6 th:text="'Тариф этого месяца: ' + *{#numbers.formatDecimal(tariffModel.doubleElectricalTariffDay,1,'COMMA', 2, 'POINT')} + ' (руб./кВт)'"></h6>
+                                        <h6 th:text="'Сумма к оплате: '+ *{#numbers.formatDecimal(tariffPaymentModel.doubleElectricalDaySum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+
+                                        <h4>Ночная фаза</h4>
+                                        <h6 th:text="'Потребление электричества в этом месяце: ' + *{#numbers.formatDecimal(tariffPaymentModel.doubleElectricalNightUsage,1,'COMMA', 2, 'POINT')} + ' (кВт)'"></h6>
+                                        <h6 th:text="'Тариф этого месяца: ' + *{#numbers.formatDecimal(tariffModel.doubleElectricalTariffNight,1,'COMMA', 2, 'POINT')} + ' (руб./кВт)'"></h6>
+                                        <h6 th:text="'Сумма к оплате: '+ *{#numbers.formatDecimal(tariffPaymentModel.doubleElectricalNightSum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+                                    </div>
+                                        <h6 th:text="'Общая сумма к оплате: ' + *{#numbers.formatDecimal(tariffPaymentModel.waterSum + tariffPaymentModel.doubleElectricalNightSum + tariffPaymentModel.doubleElectricalDaySum,1,'COMMA', 2, 'POINT')}+ ' (руб.)'"></h6>
+                                    </div>
+                                    <h6 th:if="*{tariffPaymentModel.payLocalDate!=null}" th:text="'Дата оплаты: ' + *{tariffPaymentModel.payLocalDate}"></h6>
+                                    <a th:if="*{tariffPaymentModel.payLocalDate==null}" class="btn btn-primary mb-3"
+                                       th:href="@{'/pay/tariff/' + *{tariffPaymentModel.id} }">Оплатить</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

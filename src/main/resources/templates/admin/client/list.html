@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/nav">Навигация</div>
+
+<main class="flex-shrink-0">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-2"></div>
+
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+
+                <h1 class="text-center text-dark" th:text="'Список клиентов'"></h1>
+
+
+                <a class="btn btn-primary mb-3"
+                   href="/admin/">Панель администратора</a>
+
+                <div th:if="${#lists.isEmpty(model.clientModelList)}" class="alert alert-info">
+
+                </div>
+                <div th:if="${not #lists.isEmpty(model.clientModelList)}">
+                    <div th:each="client : ${model.clientModelList}"
+                         class="d-flex flex-column bg-text mb-3 p-3 border rounded">
+                        <h4 th:text="'Id: ' + ${client.id}"></h4>
+                        <h4 th:text="'Логин: ' + ${client.login}"></h4>
+                        <h4 th:text="'Имя: ' + ${client.name}"></h4>
+                        <h4 th:text="'Фамилия: ' + ${client.middleName}"></h4>
+                        <h4 th:text="'Отчество: ' + ${client.lastName}"></h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -3,21 +3,24 @@ package com.web.curse.entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Calendar;
 import java.util.Set;
 
 @Entity
 @Table(name = "membership_fees")
 public class MembershipFee extends BaseEntity{
     private double contributionAmount;
-    private Date startDate;
-    private Date endDate;
+    private Date startLocalDate;
+    private Date endLocalDate;
 
     private Set<MembershipFeePayment> membershipFeePayments;
 
-    public MembershipFee(double contributionAmount, Date endDate) {
+    public MembershipFee(double contributionAmount) {
         this.contributionAmount = contributionAmount;
-        this.startDate = new Date();
-        this.endDate = endDate;
+        Calendar cal = Calendar.getInstance();
+        this.startLocalDate = cal.getTime();
+        cal.add(Calendar.YEAR, 1);
+        this.endLocalDate = cal.getTime();
     }
 
     @Column(name = "contribution_amount", nullable = false)
@@ -25,14 +28,14 @@ public class MembershipFee extends BaseEntity{
         return contributionAmount;
     }
 
-    @Column(name = "start_date", nullable = false)
-    public Date getStartDate() {
-        return startDate;
+    @Column(name = "start_LocalDate", nullable = false)
+    public Date getStartLocalDate() {
+        return startLocalDate;
     }
 
-    @Column(name = "end_date", nullable = false)
-    public Date getEndDate() {
-        return endDate;
+    @Column(name = "end_LocalDate", nullable = false)
+    public Date getEndLocalDate() {
+        return endLocalDate;
     }
 
     @OneToMany(mappedBy = "membershipFee",fetch = FetchType.LAZY)
@@ -45,12 +48,12 @@ public class MembershipFee extends BaseEntity{
         this.contributionAmount = contributionAmount;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartLocalDate(Date startLocalDate) {
+        this.startLocalDate = startLocalDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndLocalDate(Date endLocalDate) {
+        this.endLocalDate = endLocalDate;
     }
 
 

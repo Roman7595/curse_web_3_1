@@ -17,15 +17,17 @@ import java.util.Optional;
 @Repository
 class LandRepositoryImpl implements LandRepository {
     @Autowired
+    public LandRepositoryImpl(GetRepository<Land> getRepository, SaveRepository<Land> saveRepository, UpdateRepository<Land> updateRepository, LandCustomRepository landCustomRepository) {
+        this.getRepository = getRepository;
+        this.saveRepository = saveRepository;
+        this.updateRepository = updateRepository;
+        this.landCustomRepository = landCustomRepository;
+    }
+
+
     GetRepository<Land> getRepository;
-
-    @Autowired
     SaveRepository<Land> saveRepository;
-
-    @Autowired
     UpdateRepository<Land> updateRepository;
-
-    @Autowired
     LandCustomRepository landCustomRepository;
 
     @Override

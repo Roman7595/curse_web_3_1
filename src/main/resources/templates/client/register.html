@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Регистрация</h1>
+                </div>
+
+                <div th:if="${#lists.isEmpty(model.landPlainModels)}" class="alert alert-info">
+                    <h2>В данный момент нет свободных участков, поэтому нельзя создать новый аккаунт</h2>
+                </div>
+
+                <div th:if="${!#lists.isEmpty(model.landPlainModels)}">
+                <form th:action="@{register}"
+                      th:method="post"
+                      th:object="${form}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="login">Логин</label>
+                        <input th:field="*{login}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="login"/>
+                        <small th:if="${#fields.hasErrors('login')}"
+                               th:errors="*{login}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Пароль</label>
+                        <input th:field="*{password}"
+                               th:errorclass="is-invalid"
+                               type="password"
+                               class="form-control text-center"
+                               id="password"/>
+                        <small th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Имя</label>
+                        <input th:field="*{name}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="name"/>
+                        <small th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="middleName">Фамилия</label>
+                        <input th:field="*{middleName}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="middleName"/>
+                        <small th:if="${#fields.hasErrors('middleName')}"
+                               th:errors="*{middleName}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="lastName">Отчество</label>
+                        <input th:field="*{lastName}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="lastName"/>
+                        <small th:if="${#fields.hasErrors('lastName')}"
+                               th:errors="*{lastName}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="land">Номер участка</label>
+                        <select class="form-control text-center"
+                                th:field="*{land}"
+                                th:errorclass="is-invalid"
+                                type="text"
+                                id="land">
+                            <option th:text="'Выберете участок'" th:value="-1" ></option>
+                            <div th:each="land : ${model.landPlainModels}">
+                                <option th:value="${land.id}" th:text="${land.number}" ></option>
+                            </div>
+                        </select>
+                        <small th:if="${#fields.hasErrors('land')}"
+                               th:errors="*{land}"
+                               class="text-danger">Error message</small>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Регистрация</button>
+                </form>
+                </div>
+                <a class="btn btn-primary mb-3"
+                   href="/login">Логин</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
